@@ -1,6 +1,7 @@
 # Invoice Editor
 
 [![CI & Deploy](https://github.com/Knightly95/invoice-editor/actions/workflows/deploy.yml/badge.svg)](https://github.com/Knightly95/invoice-editor/actions/workflows/deploy.yml)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fknightly95.github.io%2Finvoice-editor%2Fcoverage-badge.json)](#tests-and-coverage)
 
 **[▶ Live demo](https://knightly95.github.io/invoice-editor/)**: runs entirely in your browser with demo data. No sign-up is needed.
 
@@ -9,6 +10,18 @@
 A React + TypeScript app for creating, editing, finalizing and tracking invoices. It's built for accountants and finance teams: amounts must be exact, invoice states must be explicit, and every action gets clear feedback.
 
 It runs **out of the box with no backend**. An in-browser mock API (built on [MSW](https://mswjs.io/)) serves seeded demo data and saves your changes in `localStorage`.
+
+
+## Screenshots
+
+| Invoice list | Editing an invoice |
+| --- | --- |
+| [![Invoice list with status filter, customer filter, sorting and pagination](docs/screenshots/invoice-list.png)](docs/screenshots/invoice-list.png) | [![Editing an invoice: a changed quantity is marked in orange and a line to be removed in red](docs/screenshots/invoice-edit.png)](docs/screenshots/invoice-edit.png) |
+| Filter by status or customer, sort and page. The state lives in the URL. | A changed field is marked in orange and a line to be removed in red, before anything is saved. |
+
+[![Invoice detail page for a paid invoice](docs/screenshots/invoice-detail.png)](docs/screenshots/invoice-detail.png)
+
+A finalized invoice is locked: it can be marked as paid or unpaid, or used as a template.
 
 ## Features
 
@@ -33,6 +46,15 @@ yarn start      # http://localhost:3000
 yarn test       # unit + integration tests
 yarn build      # production build in ./build
 ```
+
+## Tests and coverage
+
+```bash
+yarn test              # unit and integration tests
+yarn test --coverage   # the same, with a coverage report in ./coverage
+```
+
+The tests use Jest, React Testing Library and MSW. CI measures line coverage on every push to `main` and publishes the number shown in the badge above.
 
 ## API
 
@@ -86,6 +108,8 @@ npx wrangler pages deploy build   # Cloudflare Pages example
 
 ## Documentation
 
+- [`CONTRIBUTING.md`](CONTRIBUTING.md): setup, checks, conventions and how to propose a change.
+- [`AGENTS.md`](AGENTS.md): commands, rules and guardrails for AI coding agents.
 - [`ADR.md`](ADR.md): architecture and process decisions, including how AI tooling was used and validated.
 - [`DECISIONS.md`](DECISIONS.md): a detailed log of non-trivial implementation choices and their trade-offs.
 - [`HISTORY.md`](HISTORY.md): the original commit-by-commit development history.
