@@ -1,0 +1,24 @@
+.invoice-lines-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoice-lines-table td,
+.invoice-lines-table th {
+  border: 1px solid #dee2e6;
+}
+
+.invoice-lines-table td:not(:has(*)) {
+  text-align: right;
+  padding: 0.5rem;
+}
+
+.product-column {
+  min-width: 160px;
+}
+
+.invoice-lines-totals {
+  background-color: #f8f9fa;
+  border-top: 2px solid #dee2e6;
+  font-weight: 600;
+}
