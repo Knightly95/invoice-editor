@@ -1,0 +1,70 @@
+# Azure Pipelines version of the checks in .github/workflows/deploy.yml.
+#
+# The project is built and deployed by GitHub Actions. This file shows the same
+# pipeline in Azure DevOps YAML: install, type-check, test with coverage, build,
+# and publish the build as a pipeline artifact. To use it, create a pipeline in
+# an Azure DevOps project and point it at this file.
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
+
+stages:
+  - stage: Verify
+    displayName: Type-check, test and build
+    jobs:
+      - job: build
+        displayName: Build
+        steps:
+          - task: NodeTool@0
+            displayName: Use Node.js 22
+            inputs:
+              versionSpec: 22.x
+
+          - task: Cache@2
+            displayName: Cache Yarn packages
+            inputs:
+              key: 'yarn | "$(Agent.OS)" | yarn.lock'
+              restoreKeys: |
+                yarn | "$(Agent.OS)"
+              path: $(YARN_CACHE_FOLDER)
+
+          - script: yarn install --frozen-lockfile
+            displayName: Install dependencies
+
+          - script: npx tsc --noEmit
+            displayName: Type-check
+
+          - script: yarn test --silent --coverage --coverageReporters=cobertura --coverageReporters=text-summary
+            displayName: Test with coverage
+
+          - task: PublishCodeCoverageResults@2
+            displayName: Publish coverage
+            condition: succeededOrFailed()
+            inputs:
+              summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
+
+          - script: yarn build
+            displayName: Build
+            env:
+              CI: 'true'
+              PUBLIC_URL: /invoice-editor
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish the build
+            condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+            inputs:
+              targetPath: $(System.DefaultWorkingDirectory)/build
+              artifact: invoice-editor
