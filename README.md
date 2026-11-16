@@ -1,5 +1,9 @@
 # Invoice Editor
 
+[![CI & Deploy](https://github.com/Knightly95/invoice-editor/actions/workflows/deploy.yml/badge.svg)](https://github.com/Knightly95/invoice-editor/actions/workflows/deploy.yml)
+
+**[▶ Live demo](https://knightly95.github.io/invoice-editor/)**: runs entirely in your browser with demo data. No sign-up is needed.
+
 > **Background:** I built this project as a take-home for a frontend technical assessment in a hiring process, then moved it to my personal account. When I did that, I replaced the original hosted API with a built-in mock and squashed the history into one commit. You can find the original commit-by-commit history in [HISTORY.md](HISTORY.md).
 
 A React + TypeScript app for creating, editing, finalizing and tracking invoices. It's built for accountants and finance teams: amounts must be exact, invoice states must be explicit, and every action gets clear feedback.
@@ -70,6 +74,8 @@ REACT_APP_API_TOKEN=your-token   # sent as the X-SESSION header
 When `REACT_APP_API_URL` is set, the mock API is not started.
 
 ## Deployment
+
+Every push to `main` is type-checked, tested and deployed to GitHub Pages by [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
 
 The build is a fully static site, mock API included, so it can be deployed to any static host (Cloudflare Pages, Netlify, Vercel, GitHub Pages and so on). Configure your host to serve `index.html` for unknown routes, because the app uses client-side routing.
 

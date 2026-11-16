@@ -33,23 +33,29 @@ function RootLayout() {
   )
 }
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      element: <RootLayout />,
+      children: [
+        {
+          errorElement: <RouteErrorBoundary />,
+          children: [
+            { path: '/invoices/new', Component: InvoiceCreate },
+            { path: '/invoices/:id/edit', Component: InvoiceEdit },
+            { path: '/invoices/:id', Component: InvoiceShow },
+            { path: '/invoices', Component: InvoicesList },
+          ],
+        },
+        { path: '/', element: <Navigate to="/invoices" replace /> },
+      ],
+    },
+  ],
   {
-    element: <RootLayout />,
-    children: [
-      {
-        errorElement: <RouteErrorBoundary />,
-        children: [
-          { path: '/invoices/new', Component: InvoiceCreate },
-          { path: '/invoices/:id/edit', Component: InvoiceEdit },
-          { path: '/invoices/:id', Component: InvoiceShow },
-          { path: '/invoices', Component: InvoicesList },
-        ],
-      },
-      { path: '/', element: <Navigate to="/invoices" replace /> },
-    ],
-  },
-])
+    // Serves the app from a sub-path when deployed (e.g. GitHub Pages).
+    basename: process.env.PUBLIC_URL || '/',
+  }
+)
 
 function App() {
   return (
