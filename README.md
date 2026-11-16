@@ -1,5 +1,7 @@
 # Invoice Editor
 
+> **Background:** I built this project as a take-home for a frontend technical assessment in a hiring process, then moved it to my personal account. When I did that, I replaced the original hosted API with a built-in mock and squashed the history into one commit. You can find the original commit-by-commit history in [HISTORY.md](HISTORY.md).
+
 A React + TypeScript app for creating, editing, finalizing and tracking invoices. It's built for accountants and finance teams: amounts must be exact, invoice states must be explicit, and every action gets clear feedback.
 
 It runs **out of the box with no backend**. An in-browser mock API (built on [MSW](https://mswjs.io/)) serves seeded demo data and saves your changes in `localStorage`.
@@ -80,4 +82,5 @@ npx wrangler pages deploy build   # Cloudflare Pages example
 
 - [`ADR.md`](ADR.md): architecture and process decisions, including how AI tooling was used and validated.
 - [`DECISIONS.md`](DECISIONS.md): a detailed log of non-trivial implementation choices and their trade-offs.
+- [`HISTORY.md`](HISTORY.md): the original commit-by-commit development history.
 - [`backend_issues.md`](backend_issues.md): API bugs found during development and the frontend workarounds for them.
