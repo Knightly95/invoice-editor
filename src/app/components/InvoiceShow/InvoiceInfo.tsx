@@ -17,6 +17,7 @@ import {
   useTogglePaid,
 } from 'app/hooks/invoices'
 import { InvoiceStatusTag } from 'ui/InvoiceStatusTag/InvoiceStatusTag'
+import LinkButton from 'ui/LinkButton/LinkButton'
 
 interface InvoiceInfoProps {
   invoice: Components.Schemas.Invoice
@@ -188,16 +189,14 @@ const InvoiceInfo = ({ invoice }: InvoiceInfoProps) => {
                 : undefined
             }
           >
-            <Button
+            <LinkButton
               type="primary"
-              href={
-                invoice.finalized ? undefined : `/invoices/${invoice.id}/edit`
-              }
+              to={`/invoices/${invoice.id}/edit`}
               disabled={invoice.finalized}
               icon={<EditOutlined />}
             >
               Edit
-            </Button>
+            </LinkButton>
           </Tooltip>
         </Flex>
       </Flex>

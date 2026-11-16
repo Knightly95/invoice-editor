@@ -10,9 +10,10 @@ import type {
 } from 'antd/es/table/interface'
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from './constants'
 import { tableColumns } from './structure'
-import { Alert, Button, Empty, Segmented, Spin, Table } from 'antd'
+import { Alert, Empty, Segmented, Spin, Table } from 'antd'
 import { recalculateInvoiceTotals } from 'helpers/recalculateInvoiceTotals'
 import CustomerAutoComplete from 'ui/CustomerAutoComplete/CustomerAutoComplete'
+import LinkButton from 'ui/LinkButton/LinkButton'
 import {
   useDeleteInvoice,
   useFinalizeInvoice,
@@ -252,9 +253,9 @@ const InvoicesList = (): React.ReactElement => {
         >
           Invoices
         </h1>
-        <Button type="primary" href="/invoices/new" size="middle">
+        <LinkButton type="primary" to="/invoices/new" size="middle">
           + Create Invoice
-        </Button>
+        </LinkButton>
       </div>
       <div
         style={{
