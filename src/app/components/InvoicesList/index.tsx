@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import Big from 'big.js'
 import { useApi } from 'api'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useHref, useNavigate, useSearchParams } from 'react-router-dom'
 import type {
   SorterResult,
   SortOrder,
@@ -80,6 +80,8 @@ const InvoicesList = (): React.ReactElement => {
   const api = useApi()
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
+  // Includes the router basename, so new tabs open inside the app on GitHub Pages.
+  const invoicesHref = useHref('/invoices')
 
   const { finalizeInvoice } = useFinalizeInvoice()
   const { deleteInvoice } = useDeleteInvoice({ onSuccess: () => {} })
@@ -225,7 +227,10 @@ const InvoicesList = (): React.ReactElement => {
           onRow={(record) => ({
             onClick: (e) => {
               if (e.metaKey || e.ctrlKey) {
-                const win = window.open(`/invoices/${record.id}`, '_blank')
+                const win = window.open(
+                  `${invoicesHref}/${record.id}`,
+                  '_blank'
+                )
                 win?.focus()
               } else {
                 navigate(`/invoices/${record.id}`)
