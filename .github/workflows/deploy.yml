@@ -31,8 +31,8 @@ jobs:
       - name: Type-check
         run: npx tsc --noEmit
 
-      - name: Test
-        run: yarn test --silent
+      - name: Test with coverage
+        run: yarn test --silent --coverage --coverageReporters=json-summary --coverageReporters=text-summary
 
       - name: Build
         run: yarn build
@@ -44,6 +44,10 @@ jobs:
       # so deep links like /invoices/12 work on reload.
       - name: SPA fallback
         run: cp build/index.html build/404.html
+
+      # Published with the site and read by the shields.io badge in the README.
+      - name: Coverage badge data
+        run: node bin/coverage-badge.js coverage/coverage-summary.json build/coverage-badge.json
 
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main'
