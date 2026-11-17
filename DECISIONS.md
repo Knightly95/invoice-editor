@@ -1179,3 +1179,21 @@ const { label: _label, ...customer } = customerItem
 **Tradeoffs accepted**: The inferred TypeScript type widens slightly from `Product | undefined` to `Product | undefined | null`. This is correct — the field can genuinely hold `null` during interaction. The translator (`transformFormValuesToAPI`) already guards with optional chaining (`product?.id`), so the wider type does not introduce new risk.
 
 ---
+
+## Post-Publication Improvements
+
+### PP-1 — Automated accessibility checks with `jest-axe`
+
+**Problem**: Nothing checked accessibility automatically. Running axe-core on the three pages found missing accessible names on the customer filter and on the form's customer, product and quantity inputs, two table headers with no text, and invoice rows with `role="button"` that contain their own action buttons (nested interactive controls).
+
+**Options considered**:
+
+- Manual audits only → catch more, but nothing stops a regression between audits
+- Lighthouse in CI → audits the deployed page, but needs a browser and a server in CI and checks only the page it loads
+- `jest-axe` in the existing Jest suite → runs axe-core on every page in the tests that already render them, with no extra CI setup
+
+**Decision**: `jest-axe` (dev dependency) with one test per page in `src/specs/accessibility.spec.tsx`. Inputs without a visible label get an `ariaLabel` prop that is passed down to the Ant Design input. Empty column headers get visually hidden text ("Actions"). The invalid `role="button"` on invoice rows is removed.
+
+**Tradeoffs accepted**: axe finds roughly a third of accessibility problems; it can't judge colour contrast in jsdom, keyboard flow or wording. One library issue is ignored on purpose: Ant Design's Segmented control puts `aria-selected` on a plain `div`. Only that exact pattern is filtered out, so any other violation still fails. Invoice rows remain mouse-only: opening an invoice from the keyboard still needs a link on each row, which is a separate change.
+
+---

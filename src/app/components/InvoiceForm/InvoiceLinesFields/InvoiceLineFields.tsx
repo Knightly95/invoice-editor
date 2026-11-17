@@ -50,6 +50,7 @@ const InvoiceLineFields = ({
         <ProductField
           control={control}
           name={`invoice_lines.${index}.product`}
+          ariaLabel={`Product, line ${index + 1}`}
           isEdit={isEdit}
         />
       </td>
@@ -57,6 +58,7 @@ const InvoiceLineFields = ({
         <NumberInputField
           control={control}
           name={`invoice_lines.${index}.quantity`}
+          ariaLabel={`Quantity, line ${index + 1}`}
           isEdit={isEdit}
         />
       </td>

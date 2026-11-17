@@ -24,7 +24,7 @@ export function tableColumns(
   return [
     {
       key: 'actions',
-      title: '',
+      title: <span className="visually-hidden">Actions</span>,
       width: 48,
       render: (_: unknown, record: Invoice) => (
         <InvoiceRowActions invoice={record} {...actions} />
