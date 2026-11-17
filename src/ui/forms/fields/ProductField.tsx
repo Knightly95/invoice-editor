@@ -6,6 +6,8 @@ interface ProductFieldProps<T extends FieldValues> {
   name: Path<T>
   control: Control<T>
   label?: string
+  /** Accessible name, for when there is no visible label. */
+  ariaLabel?: string
   placeholder?: string
   disabled?: boolean
   required?: boolean
@@ -16,6 +18,7 @@ export const ProductField = <T extends FieldValues>({
   name,
   control,
   label,
+  ariaLabel,
   placeholder,
   required,
   isEdit = false,
@@ -33,6 +36,7 @@ export const ProductField = <T extends FieldValues>({
         value={field.value}
         onChange={field.onChange}
         placeholder={placeholder}
+        ariaLabel={ariaLabel ?? label}
       />
     </FieldLayout>
   )

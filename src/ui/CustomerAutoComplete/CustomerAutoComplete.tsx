@@ -9,6 +9,8 @@ interface Props {
   value: Customer | null
   onChange: (Customer: Customer | null) => void
   placeholder?: string
+  /** Accessible name, for when there is no visible label. */
+  ariaLabel?: string
 }
 
 const getCustomerLabel = (customer: Customer) => {
@@ -23,6 +25,7 @@ const CustomerAutoComplete = ({
   value,
   onChange,
   placeholder = 'Search for a customer',
+  ariaLabel,
 }: Props) => {
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounceState(search)
@@ -38,6 +41,7 @@ const CustomerAutoComplete = ({
       value={memoizedValue}
       onChange={onChange}
       placeholder={placeholder}
+      ariaLabel={ariaLabel}
       items={customers}
       isPending={isPending}
       fetchNextPage={fetchNextPage}

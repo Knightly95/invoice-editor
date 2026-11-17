@@ -65,7 +65,9 @@ const InvoiceLinesFields = ({ control, setValue }: InvoiceLinesFieldsProps) => {
             <th className="p-2">Unit Tax Price</th>
             <th className="p-2">Total Tax</th>
             <th className="p-2">Total Price</th>
-            <th className="p-2"></th>
+            <th className="p-2">
+              <span className="visually-hidden">Actions</span>
+            </th>
           </tr>
         </thead>
         <tbody>

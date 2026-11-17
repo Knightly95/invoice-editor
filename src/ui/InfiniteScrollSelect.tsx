@@ -6,6 +6,8 @@ interface Props<T extends { id: number; label: string }> {
   value: T | null
   onChange: (item: T | null) => void
   placeholder?: string
+  /** Accessible name, for when there is no visible label. */
+  ariaLabel?: string
   items: T[] | undefined
   isPending: boolean
   fetchNextPage: () => void
@@ -23,6 +25,7 @@ const InfiniteScrollSelect = <T extends { id: number; label: string }>({
   value,
   onChange,
   placeholder = 'Search for a item',
+  ariaLabel,
   items,
   isPending,
   fetchNextPage,
@@ -67,6 +70,7 @@ const InfiniteScrollSelect = <T extends { id: number; label: string }>({
           : undefined
       }
       placeholder={placeholder}
+      aria-label={ariaLabel}
       defaultActiveFirstOption={false}
       suffixIcon={null}
       filterOption={false}

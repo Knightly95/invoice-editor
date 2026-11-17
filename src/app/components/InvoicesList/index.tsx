@@ -236,7 +236,9 @@ const InvoicesList = (): React.ReactElement => {
                 navigate(`/invoices/${record.id}`)
               }
             },
-            role: 'button',
+            // No role="button": the row contains its own action buttons, and
+            // nesting interactive elements confuses screen readers.
+            style: { cursor: 'pointer' },
           })}
         />
       </div>
@@ -280,6 +282,7 @@ const InvoicesList = (): React.ReactElement => {
             value={customer}
             onChange={handleCustomerChange}
             placeholder="Filter by customer"
+            ariaLabel="Filter by customer"
           />
         </div>
       </div>

@@ -6,6 +6,8 @@ interface NumberInputFieldProps<T extends FieldValues> {
   name: Path<T>
   control: Control<T>
   label?: string
+  /** Accessible name, for when there is no visible label. */
+  ariaLabel?: string
   placeholder?: string
   disabled?: boolean
   required?: boolean
@@ -24,6 +26,7 @@ export const NumberInputField = <T extends FieldValues>({
   name,
   control,
   label,
+  ariaLabel,
   placeholder,
   disabled,
   required,
@@ -54,7 +57,7 @@ export const NumberInputField = <T extends FieldValues>({
         min={min}
         max={max}
         step={step}
-        aria-label={label}
+        aria-label={ariaLabel ?? label}
         style={STYLE}
       />
     </FieldLayout>

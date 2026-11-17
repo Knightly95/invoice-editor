@@ -9,12 +9,15 @@ interface Props {
   value: Product | null
   onChange: (product: Product | null) => void
   placeholder?: string
+  /** Accessible name, for when there is no visible label. */
+  ariaLabel?: string
 }
 
 const ProductAutoComplete = ({
   value,
   onChange,
   placeholder = 'Search for a product',
+  ariaLabel,
 }: Props) => {
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounceState(search)
@@ -26,6 +29,7 @@ const ProductAutoComplete = ({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
+      ariaLabel={ariaLabel}
       items={products}
       isPending={isPending}
       fetchNextPage={fetchNextPage}
