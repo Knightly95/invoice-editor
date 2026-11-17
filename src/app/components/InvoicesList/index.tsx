@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import Big from 'big.js'
 import { useApi } from 'api'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useHref, useNavigate, useSearchParams } from 'react-router-dom'
 import type {
   SorterResult,
   SortOrder,
@@ -10,9 +10,10 @@ import type {
 } from 'antd/es/table/interface'
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from './constants'
 import { tableColumns } from './structure'
-import { Alert, Button, Empty, Segmented, Spin, Table } from 'antd'
+import { Alert, Empty, Segmented, Spin, Table } from 'antd'
 import { recalculateInvoiceTotals } from 'helpers/recalculateInvoiceTotals'
 import CustomerAutoComplete from 'ui/CustomerAutoComplete/CustomerAutoComplete'
+import LinkButton from 'ui/LinkButton/LinkButton'
 import {
   useDeleteInvoice,
   useFinalizeInvoice,
@@ -79,6 +80,8 @@ const InvoicesList = (): React.ReactElement => {
   const api = useApi()
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
+  // Includes the router basename, so new tabs open inside the app on GitHub Pages.
+  const invoicesHref = useHref('/invoices')
 
   const { finalizeInvoice } = useFinalizeInvoice()
   const { deleteInvoice } = useDeleteInvoice({ onSuccess: () => {} })
@@ -224,7 +227,10 @@ const InvoicesList = (): React.ReactElement => {
           onRow={(record) => ({
             onClick: (e) => {
               if (e.metaKey || e.ctrlKey) {
-                const win = window.open(`/invoices/${record.id}`, '_blank')
+                const win = window.open(
+                  `${invoicesHref}/${record.id}`,
+                  '_blank'
+                )
                 win?.focus()
               } else {
                 navigate(`/invoices/${record.id}`)
@@ -252,9 +258,9 @@ const InvoicesList = (): React.ReactElement => {
         >
           Invoices
         </h1>
-        <Button type="primary" href="/invoices/new" size="middle">
+        <LinkButton type="primary" to="/invoices/new" size="middle">
           + Create Invoice
-        </Button>
+        </LinkButton>
       </div>
       <div
         style={{
