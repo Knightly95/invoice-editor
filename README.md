@@ -115,6 +115,27 @@ yarn build
 npx wrangler pages deploy build   # Cloudflare Pages example
 ```
 
+## How AI was used
+
+Since November 2026 I maintain this repo with an AI coding agent (Claude Code). The original assessment code is described in the background note at the top.
+
+**What the agent did**
+
+- Found and fixed the "+ Create Invoice" and "Edit" buttons opening a 404 page on the live demo (a base-path bug on GitHub Pages), with a test.
+- Added the screenshots, `CONTRIBUTING.md`, `AGENTS.md`, templates and the coverage badge.
+- Added axe accessibility tests and fixed what they found (missing labels, table headers, invalid roles).
+- Wrote the Azure Pipelines file and the Lighthouse and bundle-size checks.
+
+**How it is checked**
+
+- The agent follows [AGENTS.md](AGENTS.md): commands, conventions and what it must not do.
+- Every change goes through a pull request. I read the diff and merge it myself; nothing is pushed straight to `main`.
+- CI runs lint, type-check and the 99 tests (including axe accessibility checks) on every pull request, plus the Lighthouse and bundle-size checks.
+
+**Where it needed correcting**
+
+The first Lighthouse setup scored the app's error page instead of the app: it opened `/index.html`, which is not a route. I caught it by reading the report, not just the score, and pointed it at `/`.
+
 ## Documentation
 
 - [`CONTRIBUTING.md`](CONTRIBUTING.md): setup, checks, conventions and how to propose a change.
