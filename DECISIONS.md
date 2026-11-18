@@ -419,6 +419,8 @@ The `finalized + paid` combination is encoded in a single visual state (Paid), b
 
 ---
 
+**Update (18 Nov 2026):** replaced by Ant Design `Radio.Group` with `optionType="button"`. It looks the same, but `Segmented` put `aria-selected` on a plain `div` (an ARIA error that Lighthouse and axe report), while the radio group exposes real radio buttons with a group label. The accessibility tests no longer need an exception for it.
+
 ### FL-2 — Customer filter via `CustomerAutoComplete` (F6)
 
 **Problem**: The API supports `customer_id` equality filtering but the list had no way to narrow by customer. Looking up all invoices for a specific client is a frequent operator workflow.

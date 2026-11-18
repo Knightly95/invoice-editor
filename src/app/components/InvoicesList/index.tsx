@@ -10,7 +10,7 @@ import type {
 } from 'antd/es/table/interface'
 import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from './constants'
 import { tableColumns } from './structure'
-import { Alert, Empty, Segmented, Spin, Table } from 'antd'
+import { Alert, Empty, Radio, Spin, Table } from 'antd'
 import { recalculateInvoiceTotals } from 'helpers/recalculateInvoiceTotals'
 import CustomerAutoComplete from 'ui/CustomerAutoComplete/CustomerAutoComplete'
 import LinkButton from 'ui/LinkButton/LinkButton'
@@ -272,10 +272,13 @@ const InvoicesList = (): React.ReactElement => {
           marginBottom: 16,
         }}
       >
-        <Segmented
+        <Radio.Group
           options={STATUS_OPTIONS}
           value={status}
-          onChange={handleStatusChange}
+          onChange={(event) => handleStatusChange(event.target.value)}
+          optionType="button"
+          buttonStyle="solid"
+          aria-label="Filter by status"
         />
         <div style={{ width: 280 }}>
           <CustomerAutoComplete

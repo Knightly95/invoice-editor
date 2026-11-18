@@ -62,10 +62,9 @@ describe('InvoicesList', () => {
     await screen.findByText(/no invoices yet/i)
   })
 
-  it('re-fetches with a draft filter when the Draft segment is selected', async () => {
-    // pointerEventsCheck: 0 — Ant Design Segmented renders the radio <input> with
-    // pointer-events:none; the click propagates via the parent <label>, so we must
-    // opt out of userEvent's strict pointer-events assertion here.
+  it('re-fetches with a draft filter when the Draft option is selected', async () => {
+    // pointerEventsCheck: 0 — Ant Design's button-style radios hide the <input>
+    // with pointer-events:none; the click reaches it through the parent <label>.
     const user = userEvent.setup({ pointerEventsCheck: 0 })
     mockEndpoint({
       endpointName: 'getInvoices',

@@ -95,6 +95,15 @@ REACT_APP_API_TOKEN=your-token   # sent as the X-SESSION header
 
 When `REACT_APP_API_URL` is set, the mock API is not started.
 
+### Quality checks
+
+A second CI job builds the app and checks what visitors get:
+
+- **Lighthouse** (mobile settings): the build fails if accessibility drops below 95 or best practices below 90; performance and SEO are reported. Last run: performance 73, accessibility 100, best practices 100, SEO 91. Performance is lower because Ant Design is a large library; it is reported, not enforced.
+- **Bundle budget:** the JavaScript sent to the browser must stay under 600 kB gzip (today: 569.8 kB). To check locally: `yarn build && node bin/bundle-budget.mjs build 600`.
+
+The Lighthouse report is attached to each CI run.
+
 ## Deployment
 
 Every push to `main` is type-checked, tested and deployed to GitHub Pages by [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).

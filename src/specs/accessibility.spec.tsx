@@ -23,19 +23,6 @@ import { createTestQueryClient } from 'specs/testUtils'
  * tests complement manual checks rather than replace them.
  */
 
-/**
- * Ant Design's Segmented control puts aria-selected on a plain div, which axe
- * reports as aria-allowed-attr. It's in the library, not in this app, so only
- * that exact case is ignored; any other violation still fails the test.
- */
-type Violation = Awaited<ReturnType<typeof axe>>['violations'][number]
-
-const isKnownAntdIssue = (violation: Violation) =>
-  violation.id === 'aria-allowed-attr' &&
-  violation.nodes.every((node) =>
-    node.html.includes('ant-segmented-item-label')
-  )
-
 const emptyPage = { page: 1, page_size: 10, total_pages: 1, total_entries: 0 }
 
 function renderRoute(path: string, element: React.ReactElement, url: string) {
@@ -84,10 +71,7 @@ describe('accessibility (axe)', () => {
     await screen.findByText('Alice Martin')
 
     const results = await axe(container)
-    expect({
-      ...results,
-      violations: results.violations.filter((v) => !isKnownAntdIssue(v)),
-    }).toHaveNoViolations()
+    expect(results).toHaveNoViolations()
   })
 
   it('invoice detail page has no detectable violations', async () => {
